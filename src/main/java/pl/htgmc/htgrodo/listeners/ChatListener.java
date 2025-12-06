@@ -4,7 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import pl.htgmc.htgrodo.Main;
+import pl.htgmc.htgrodo.HTGRODO;
 import pl.htgmc.htgrodo.censor.UserInputFilter;
 import pl.htgmc.htgrodo.censor.ChatFilter;
 import pl.htgmc.htgrodo.users.UserDataManager;
@@ -15,7 +15,7 @@ public class ChatListener implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
 
         // 0. Globalne filtry wyłączone → nic nie ruszamy
-        if (!Main.get().isFilteringEnabled()) {
+        if (!HTGRODO.get().isFilteringEnabled()) {
             return;
         }
 
@@ -26,8 +26,8 @@ public class ChatListener implements Listener {
         }
 
         String original = event.getMessage();
-        UserInputFilter inputFilter = Main.get().api().getInputFilter();
-        ChatFilter chatFilter = Main.get().api().getChatFilter();
+        UserInputFilter inputFilter = HTGRODO.get().api().getInputFilter();
+        ChatFilter chatFilter = HTGRODO.get().api().getChatFilter();
 
         // 2. Sprawdzenie danych wrażliwych
         boolean sensitive = inputFilter.containsSensitiveData(original);
@@ -38,7 +38,7 @@ public class ChatListener implements Listener {
         if (sensitive) {
             sanitized = inputFilter.sanitize(original);
 
-            Main.get().api().logAudit(
+            HTGRODO.get().api().logAudit(
                     event.getPlayer().getName(),
                     "CHAT_SENSITIVE_BLOCK",
                     "Wiadomość zawierała dane osobowe"

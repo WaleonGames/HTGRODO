@@ -1,5 +1,6 @@
 package pl.htgmc.htgrodo;
 
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import pl.htgmc.htgrodo.censor.ChatFilter;
@@ -12,9 +13,9 @@ import pl.htgmc.htgrodo.listeners.CommandListener;
 import pl.htgmc.htgrodo.api.RodoAPI;
 import pl.htgmc.htgrodo.commands.RodoCommand;
 
-public class Main extends JavaPlugin {
+public class HTGRODO extends JavaPlugin {
 
-    private static Main instance;
+    private static HTGRODO instance;
 
     private ChatFilter chatFilter;
     private UserInputFilter inputFilter;
@@ -25,17 +26,25 @@ public class Main extends JavaPlugin {
 
     private boolean filteringEnabled = true;
 
+    // ============================================================
+    //                      ON ENABLE
+    // ============================================================
     @Override
     public void onEnable() {
         long start = System.currentTimeMillis();
+
+        // INSTANCE
         instance = this;
 
-        printLogo(); // ASCII logo jak LuckPerms
+        // LOGO
+        printLogo();
 
+        // CONFIG
         log("Loading configuration...");
         saveDefaultConfig();
         this.filteringEnabled = getConfig().getBoolean("filters.enabled", true);
 
+        // MODULES
         log("Loading modules...");
         this.masker = new DataMasker();
         this.chatFilter = new ChatFilter();
@@ -44,10 +53,20 @@ public class Main extends JavaPlugin {
         this.audit = new AuditLogger();
         this.api = new RodoAPI(masker, chatFilter, inputFilter, policy, audit);
 
+        // SERVICES MANAGER — REJESTRACJA API
+        getServer().getServicesManager().register(
+                RodoAPI.class,
+                this.api,
+                this,
+                ServicePriority.Highest
+        );
+
+        // LISTENERS
         log("Registering listeners...");
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
         getServer().getPluginManager().registerEvents(new CommandListener(), this);
 
+        // COMMANDS
         log("Registering commands...");
         getCommand("rodo").setExecutor(new RodoCommand());
 
@@ -55,13 +74,19 @@ public class Main extends JavaPlugin {
         log("Successfully enabled. (took " + took + "ms)");
     }
 
+    // ============================================================
+    //                      ON DISABLE
+    // ============================================================
     @Override
     public void onDisable() {
         log("Shutting down...");
         log("Successfully disabled.");
     }
 
-    public static Main get() {
+    // ============================================================
+    //                      GETTERS
+    // ============================================================
+    public static HTGRODO get() {
         return instance;
     }
 
@@ -80,10 +105,9 @@ public class Main extends JavaPlugin {
         log("Global filtering state updated: " + (value ? "ENABLED" : "DISABLED"));
     }
 
-    // ===============================
-    //  LOG STYL LUCKPERMS
-    // ===============================
-
+    // ============================================================
+    //                      LOGGING
+    // ============================================================
     private void log(String msg) {
         getLogger().info(msg);
     }
@@ -97,7 +121,7 @@ public class Main extends JavaPlugin {
         log("    | |  | | |____| |_) | |__| | |_| | |__| | |_| | ");
         log("    |_|  |_|______|____/ \\____/ \\___/ \\____/ \\___/  ");
         log(" ");
-        log("HTGRODO v1.0 - Privacy & Data Protection Layer");
+        log("HTGRODO v1.1 - Privacy & Data Protection Layer");
         log("Running on: Bukkit/Paper");
         log(" ");
     }

@@ -1,7 +1,7 @@
 package pl.htgmc.htgrodo.audit;
 
 import org.bukkit.Bukkit;
-import pl.htgmc.htgrodo.Main;
+import pl.htgmc.htgrodo.HTGRODO;
 import pl.htgmc.htgrodo.utils.FileUtil;
 
 import java.io.File;
@@ -13,7 +13,7 @@ public class AuditLogger {
     private final File auditFile;
 
     public AuditLogger() {
-        File folder = new File(Main.get().getDataFolder(), "logs");
+        File folder = new File(HTGRODO.get().getDataFolder(), "logs");
         if (!folder.exists()) folder.mkdirs();
 
         this.auditFile = new File(folder, "audit.json");

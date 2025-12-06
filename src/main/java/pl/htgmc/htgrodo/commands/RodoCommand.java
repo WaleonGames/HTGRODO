@@ -4,7 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import pl.htgmc.htgrodo.Main;
+import pl.htgmc.htgrodo.HTGRODO;
 import pl.htgmc.htgrodo.users.UserDataManager;
 
 public class RodoCommand implements CommandExecutor {
@@ -70,23 +70,23 @@ public class RodoCommand implements CommandExecutor {
             switch (args[1].toLowerCase()) {
 
                 case "wlacz":
-                    Main.get().setFilteringEnabled(true);
+                    HTGRODO.get().setFilteringEnabled(true);
                     sender.sendMessage("§a[HTGRODO] Globalna filtracja została WŁĄCZONA.");
                     return true;
 
                 case "wylacz":
-                    Main.get().setFilteringEnabled(false);
+                    HTGRODO.get().setFilteringEnabled(false);
                     sender.sendMessage("§c[HTGRODO] Globalna filtracja została WYŁĄCZONA.");
                     return true;
 
                 case "reload":
-                    Main.get().reloadConfig();
+                    HTGRODO.get().reloadConfig();
                     sender.sendMessage("§e[HTGRODO] Konfiguracja przeładowana.");
                     return true;
 
                 case "status":
                     sender.sendMessage("§7==== §cHTGRODO — Status Admina §7====");
-                    sender.sendMessage("§7Filtry globalne: " + (Main.get().isFilteringEnabled() ? "§aWłączone" : "§cWyłączone"));
+                    sender.sendMessage("§7Filtry globalne: " + (HTGRODO.get().isFilteringEnabled() ? "§aWłączone" : "§cWyłączone"));
                     return true;
 
                 default:

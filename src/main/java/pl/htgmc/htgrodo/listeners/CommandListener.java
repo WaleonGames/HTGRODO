@@ -4,7 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import pl.htgmc.htgrodo.Main;
+import pl.htgmc.htgrodo.HTGRODO;
 import pl.htgmc.htgrodo.censor.UserInputFilter;
 import pl.htgmc.htgrodo.users.UserDataManager;
 
@@ -18,7 +18,7 @@ public class CommandListener implements Listener {
     public void onCommand(PlayerCommandPreprocessEvent event) {
 
         // 0. Globalne filtry wyłączone
-        if (!Main.get().isFilteringEnabled()) {
+        if (!HTGRODO.get().isFilteringEnabled()) {
             return;
         }
 
@@ -29,7 +29,7 @@ public class CommandListener implements Listener {
         }
 
         String cmd = event.getMessage().toLowerCase();
-        UserInputFilter filter = Main.get().api().getInputFilter();
+        UserInputFilter filter = HTGRODO.get().api().getInputFilter();
 
         // 2. Czy to komenda prywatna
         boolean isPrivate = false;
@@ -43,7 +43,7 @@ public class CommandListener implements Listener {
         // 3. Filtrowanie zwykłych komend
         if (!isPrivate) {
             if (filter.containsSensitiveData(cmd)) {
-                Main.get().api().logAudit(
+                HTGRODO.get().api().logAudit(
                         event.getPlayer().getName(),
                         "COMMAND_SENSITIVE_DATA",
                         "Próba użycia danych osobowych w komendzie: " + event.getMessage()
@@ -57,7 +57,7 @@ public class CommandListener implements Listener {
         String sanitized = filter.sanitize(event.getMessage());
 
         if (!sanitized.equals(event.getMessage())) {
-            Main.get().api().logAudit(
+            HTGRODO.get().api().logAudit(
                     event.getPlayer().getName(),
                     "PRIVATE_MESSAGE_SANITIZED",
                     "Usunięto dane osobowe z komendy: " + event.getMessage()
