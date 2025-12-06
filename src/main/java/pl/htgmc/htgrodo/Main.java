@@ -23,21 +23,20 @@ public class Main extends JavaPlugin {
     private AuditLogger audit;
     private RodoAPI api;
 
-    // ===============================
-    // Globalne ON/OFF filtracji
-    // ===============================
     private boolean filteringEnabled = true;
 
     @Override
     public void onEnable() {
+        long start = System.currentTimeMillis();
         instance = this;
 
-        saveDefaultConfig();
+        printLogo(); // ASCII logo jak LuckPerms
 
-        // Wczytaj status filtracji z config.yml
+        log("Loading configuration...");
+        saveDefaultConfig();
         this.filteringEnabled = getConfig().getBoolean("filters.enabled", true);
 
-        // Inicjalizacja modułów
+        log("Loading modules...");
         this.masker = new DataMasker();
         this.chatFilter = new ChatFilter();
         this.inputFilter = new UserInputFilter();
@@ -45,20 +44,21 @@ public class Main extends JavaPlugin {
         this.audit = new AuditLogger();
         this.api = new RodoAPI(masker, chatFilter, inputFilter, policy, audit);
 
-        // Rejestr listenerów
+        log("Registering listeners...");
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
         getServer().getPluginManager().registerEvents(new CommandListener(), this);
 
-        // Rejestracja komendy /rodo
+        log("Registering commands...");
         getCommand("rodo").setExecutor(new RodoCommand());
 
-        getLogger().info("[HTGRODO] Plugin uruchomiony!");
-        getLogger().info("[HTGRODO] Filtry globalne: " + (filteringEnabled ? "Włączone" : "Wyłączone"));
+        long took = System.currentTimeMillis() - start;
+        log("Successfully enabled. (took " + took + "ms)");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("[HTGRODO] Plugin wyłączony.");
+        log("Shutting down...");
+        log("Successfully disabled.");
     }
 
     public static Main get() {
@@ -69,21 +69,36 @@ public class Main extends JavaPlugin {
         return api;
     }
 
-    // ===============================
-    // SYSTEM WŁĄCZ / WYŁĄCZ FILTRY
-    // ===============================
-
     public boolean isFilteringEnabled() {
         return filteringEnabled;
     }
 
     public void setFilteringEnabled(boolean value) {
         this.filteringEnabled = value;
-
-        // zapisanie do configu
         getConfig().set("filters.enabled", value);
         saveConfig();
+        log("Global filtering state updated: " + (value ? "ENABLED" : "DISABLED"));
+    }
 
-        getLogger().info("[HTGRODO] Globalna filtracja: " + (value ? "Włączona" : "Wyłączona"));
+    // ===============================
+    //  LOG STYL LUCKPERMS
+    // ===============================
+
+    private void log(String msg) {
+        getLogger().info(msg);
+    }
+
+    private void printLogo() {
+        log(" ");
+        log("     __  __ ______ ____   ____   ___   ____   ___   ");
+        log("    |  \\/  |  ____|  _ \\ / __ \\ / _ \\ / __ \\ / _ \\  ");
+        log("    | \\  / | |__  | |_) | |  | | | | | |  | | | | | ");
+        log("    | |\\/| |  __| |  _ <| |  | | | | | |  | | | | | ");
+        log("    | |  | | |____| |_) | |__| | |_| | |__| | |_| | ");
+        log("    |_|  |_|______|____/ \\____/ \\___/ \\____/ \\___/  ");
+        log(" ");
+        log("HTGRODO v1.0 - Privacy & Data Protection Layer");
+        log("Running on: Bukkit/Paper");
+        log(" ");
     }
 }
