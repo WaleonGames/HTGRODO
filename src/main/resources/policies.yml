@@ -1,0 +1,20 @@
+# ===============================
+# Polityka dostępu (RODO)
+# ===============================
+
+roles:
+  full-access:
+    permissions:
+      - htg.rodo.view.ip
+      - htg.rodo.view.uuid
+      - htg.rodo.view.raw
+
+  limited-access:
+    permissions:
+      - htg.rodo.view.uuid
+
+  masked-only:
+    permissions: []
+
+policy:
+  default-role: masked-only

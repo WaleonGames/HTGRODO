@@ -1,0 +1,33 @@
+name: HTGRODO
+version: '${project.version}'
+main: pl.htgmc.htgrodo.Main
+api-version: '1.21'
+author: HTGMC
+description: Ochrona danych osobowych, filtrowanie treści i audyt RODO w sieci HTGMC.
+
+commands:
+  rodo:
+    description: System ochrony danych osobowych
+    usage: /rodo
+    aliases: [rodo, rodohelp]
+
+permissions:
+  htg.rodo.view.ip:
+    description: Pozwala widzieć prawdziwe adresy IP graczy
+    default: op
+
+  htg.rodo.view.uuid:
+    description: Pozwala widzieć prawdziwe UUID graczy
+    default: op
+
+  htg.rodo.view.raw:
+    description: Pozwala widzieć wszystkie niezamaskowane dane
+    default: op
+
+  htg.rodo.bypass:
+    description: Wyłącza cenzurowanie treści i maskowanie danych
+    default: op
+
+  htg.rodo.admin:
+    description: Dostęp do komend administracyjnych HTGRODO
+    default: op

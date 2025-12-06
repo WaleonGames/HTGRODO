@@ -1,0 +1,22 @@
+# ===============================
+# HTGRODO — Ustawienia główne
+# ===============================
+
+audit:
+  enabled: true            # włącz/wyłącz audyt
+  format: json             # json / text
+  folder: logs             # folder dla logów
+  rotation: false          # rotacja logów (opcjonalnie)
+
+privacy:
+  mask-ip: true
+  mask-uuid: true
+  mask-nick: false         # opcja maskowania nicków w niektórych logach
+
+filters:
+  censor-chat: true
+  censor-private-commands: true
+  block-sensitive-input: true
+
+debug:
+  enable-debug-logs: false
