@@ -1,6 +1,6 @@
 name: HTGRODO
 version: '${project.version}'
-main: pl.htgmc.htgrodo.Main
+main: pl.htgmc.htgrodo.HTGRODO
 api-version: '1.21'
 author: HTGMC
 description: Ochrona danych osobowych, filtrowanie treści i audyt RODO w sieci HTGMC.

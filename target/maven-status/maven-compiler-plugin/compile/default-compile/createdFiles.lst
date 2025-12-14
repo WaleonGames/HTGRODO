@@ -13,4 +13,4 @@ pl/htgmc/htgrodo/censor/ChatFilter.class
 pl/htgmc/htgrodo/audit/AuditLogger.class
 pl/htgmc/htgrodo/api/RodoAPI.class
 pl/htgmc/htgrodo/censor/SensitivePatterns.class
-pl/htgmc/htgrodo/Main.class
+pl/htgmc/htgrodo/HTGRODO.class
