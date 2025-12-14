@@ -4,7 +4,7 @@
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/censor/SensitivePatterns.java
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/listeners/CommandListener.java
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/api/RodoAPI.java
-/home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/Main.java
+/home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/HTGRODO.java
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/censor/ChatFilter.java
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/privacy/PrivacyPolicyEngine.java
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/api/DataType.java

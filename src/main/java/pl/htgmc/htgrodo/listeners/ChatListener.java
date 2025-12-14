@@ -5,6 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import pl.htgmc.htgrodo.HTGRODO;
+import pl.htgmc.htgrodo.api.RodoAPI;
 import pl.htgmc.htgrodo.censor.UserInputFilter;
 import pl.htgmc.htgrodo.censor.ChatFilter;
 import pl.htgmc.htgrodo.users.UserDataManager;
@@ -14,38 +15,36 @@ public class ChatListener implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
 
-        // 0. Globalne filtry wyłączone → nic nie ruszamy
-        if (!HTGRODO.get().isFilteringEnabled()) {
-            return;
-        }
+        // 0. Globalne filtry wyłączone
+        if (!HTGRODO.get().isFilteringEnabled()) return;
 
-        // 1. Ochrona użytkownika wyłączona → NIE FILTRUJEMY jego wiadomości
-        boolean userProtection = UserDataManager.isProtectionEnabled(event.getPlayer().getName());
-        if (!userProtection) {
-            return;
-        }
+        // 1. Ochrona użytkownika wyłączona
+        if (!UserDataManager.isProtectionEnabled(event.getPlayer().getName())) return;
 
         String original = event.getMessage();
-        UserInputFilter inputFilter = HTGRODO.get().api().getInputFilter();
-        ChatFilter chatFilter = HTGRODO.get().api().getChatFilter();
 
-        // 2. Sprawdzenie danych wrażliwych
+        RodoAPI rodo = HTGRODO.get().api();
+        UserInputFilter inputFilter = rodo.getInputFilter();
+        ChatFilter chatFilter = rodo.getChatFilter();
+
         boolean sensitive = inputFilter.containsSensitiveData(original);
-
         String sanitized = original;
 
-        // 3. Filtrowanie wejściowe (usuwamy dane prywatne)
+        // 2. Dane wysokiego ryzyka (PESEL, tel, email)
         if (sensitive) {
             sanitized = inputFilter.sanitize(original);
 
-            HTGRODO.get().api().logAudit(
+            rodo.logAudit(
                     event.getPlayer().getName(),
                     "CHAT_SENSITIVE_BLOCK",
-                    "Wiadomość zawierała dane osobowe"
+                    "Wiadomość zawierała dane osobowe (wysokiego ryzyka)"
             );
         }
 
-        // 4. Filtrowanie wyjściowe (cenzura czatu)
+        // 🔥 3. MASKOWANIE ULIC – NOWA LOGIKA (ANTY FALSE-POSITIVE)
+        sanitized = rodo.maskStreet(sanitized);
+
+        // 4. Cenzura końcowa (***)
         sanitized = chatFilter.filterOutgoingMessage(sanitized);
 
         event.setMessage(sanitized);

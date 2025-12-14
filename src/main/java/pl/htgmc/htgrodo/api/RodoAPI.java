@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 
 import pl.htgmc.htgrodo.censor.ChatFilter;
 import pl.htgmc.htgrodo.censor.UserInputFilter;
-import pl.htgmc.htgrodo.privacy.DataMasker;
 import pl.htgmc.htgrodo.privacy.PrivacyPolicyEngine;
 import pl.htgmc.htgrodo.audit.AuditLogger;
 

@@ -4,24 +4,39 @@ import java.util.regex.Pattern;
 
 public class SensitivePatterns {
 
-    // Polski numer telefonu (9 cyfr lub formaty ze spacjami/myślnikami)
+    // =========================
+    // TELEFON (PL) – 9 cyfr
+    // =========================
     public static final Pattern PHONE = Pattern.compile(
-            "\\b(?:\\+?48)?[\\s-]?\\d{3}[\\s-]?\\d{3}[\\s-]?\\d{3}\\b"
+            "\\b(?:\\+?48\\s*)?[4-9]\\d{2}[\\s-]?\\d{3}[\\s-]?\\d{3}\\b"
     );
 
-    // Email
+    // =========================
+    // EMAIL
+    // =========================
     public static final Pattern EMAIL = Pattern.compile(
             "\\b[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,6}\\b"
     );
 
-    // Pesel – 11 cyfr
+    // =========================
+    // PESEL – 11 cyfr (walidacja później)
+    // =========================
     public static final Pattern PESEL = Pattern.compile(
-            "\\b(?:\\d\\s*){11}\\b"
+            "\\b\\d{11}\\b"
     );
 
-    // Adres – przykładowe formaty: "ul. Kwiatowa 12", "Kwiatowa 12/3"
+    // =========================
+    // ADRES PL – ulica + numer (OBOWIĄZKOWY)
+    // - działa dla: "jasna 12", "ul. jasna 12", "plac 3 Maja 10"
+    // - NIE łapie: "jasna sprawa"
+    // =========================
     public static final Pattern ADDRESS = Pattern.compile(
-            "\\b(?:ul\\.?\\s+[A-ZĄĆĘŁŃÓŚŻŹ][a-ząćęłńóśżź]+(?:\\s+[A-ZĄĆĘŁŃÓŚŻŹ][a-ząćęłńóśżź]+)*"
-                    + "|[A-ZĄĆĘŁŃÓŚŻŹ][a-ząćęłńóśżź]+(?:\\s+[A-ZĄĆĘŁŃÓŚŻŹ][a-ząćęłńóśżź]+)*\\s+\\d{1,4}(?:/[0-9A-Za-z]{1,4})?)\\b"
+            "(?iu)\\b" +
+                    "(?:(ul\\.?|ulica|al\\.?|aleja|pl\\.?|plac|os\\.?|osiedle)\\s+)?" +
+                    "(?:\\d{1,2}\\s+)?" +                 // 3 Maja, 11 Listopada
+                    "[a-ząćęłńóśźż]{3,}" +
+                    "(?:\\s+[a-ząćęłńóśźż]{2,})*" +
+                    "\\s+\\d{1,4}[a-z]?(?:/\\d{1,4})?" +
+                    "\\b"
     );
 }
