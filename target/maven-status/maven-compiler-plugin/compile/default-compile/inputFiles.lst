@@ -1,6 +1,7 @@
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/censor/UserInputFilter.java
-/home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/privacy/DataMasker.java
+/home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/censor/PeselType.java
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/users/UserDataManager.java
+/home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/censor/IpValidator.java
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/censor/SensitivePatterns.java
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/listeners/CommandListener.java
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/api/RodoAPI.java
@@ -10,6 +11,8 @@
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/api/DataType.java
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/utils/HashUtils.java
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/utils/FileUtil.java
+/home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/censor/PeselValidator.java
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/listeners/ChatListener.java
+/home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/censor/IpType.java
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/audit/AuditLogger.java
 /home/kacper/IdeaProjects/HTGRODO/src/main/java/pl/htgmc/htgrodo/commands/RodoCommand.java

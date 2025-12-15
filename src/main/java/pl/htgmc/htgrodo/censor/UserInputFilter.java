@@ -6,38 +6,41 @@ public class UserInputFilter {
      * Sprawdza, czy tekst zawiera dane osobowe WYSOKIEGO ryzyka:
      * - numer telefonu
      * - email
-     * - PESEL
+     * - PRAWDZIWY PESEL (po walidacji)
      *
-     * Ulice NIE są tutaj wykrywane → nie są danymi wrażliwymi.
+     * Adresy NIE są tutaj wykrywane.
      */
     public boolean containsSensitiveData(String text) {
         if (text == null) return false;
 
-        return SensitivePatterns.PHONE.matcher(text).find()
-                || SensitivePatterns.EMAIL.matcher(text).find()
-                || SensitivePatterns.PESEL.matcher(text).find();
+        if (SensitivePatterns.PHONE.matcher(text).find()) return true;
+        if (SensitivePatterns.EMAIL.matcher(text).find()) return true;
+
+        return PeselValidator.detectType(text) == PeselType.REAL;
     }
 
     /**
-     * Usuwa dane osobowe i zastępuje je placeholderem `[ukryto]`
-     * Ulice NIE są tu maskowane – robi to DataMasker
+     * Usuwa dane osobowe WYSOKIEGO ryzyka i zastępuje je `[ukryto]`.
+     * Maskowanie wizualne (*** / ~~fake~~) odbywa się w ChatFilter.
      */
     public String sanitize(String text) {
         if (text == null) return "";
 
         String result = text;
 
-        // Maskowanie danych WYSOKIEGO ryzyka
         result = result.replaceAll(SensitivePatterns.PHONE.pattern(), "[ukryto]");
         result = result.replaceAll(SensitivePatterns.EMAIL.pattern(), "[ukryto]");
-        result = result.replaceAll(SensitivePatterns.PESEL.pattern(), "[ukryto]");
+
+        // PESEL: tylko PRAWDZIWY
+        if (PeselValidator.detectType(result) == PeselType.REAL) {
+            result = result.replaceAll(SensitivePatterns.PESEL.pattern(), "[ukryto]");
+        }
 
         return result;
     }
 
-
     // =============================================================
-    // Dodatkowe funkcje wykrywania (przydatne dla RodoAPI)
+    // Metody pomocnicze (BEZ PESEL!)
     // =============================================================
 
     public boolean containsEmail(String text) {
@@ -46,9 +49,5 @@ public class UserInputFilter {
 
     public boolean containsPhone(String text) {
         return text != null && SensitivePatterns.PHONE.matcher(text).find();
-    }
-
-    public boolean containsPesel(String text) {
-        return text != null && SensitivePatterns.PESEL.matcher(text).find();
     }
 }

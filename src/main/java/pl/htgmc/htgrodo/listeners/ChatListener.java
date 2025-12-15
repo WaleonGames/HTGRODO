@@ -30,7 +30,7 @@ public class ChatListener implements Listener {
         boolean sensitive = inputFilter.containsSensitiveData(original);
         String sanitized = original;
 
-        // 2. Dane wysokiego ryzyka (PESEL, tel, email)
+        // 2. Dane wysokiego ryzyka (telefon, email, PESEL)
         if (sensitive) {
             sanitized = inputFilter.sanitize(original);
 
@@ -41,10 +41,7 @@ public class ChatListener implements Listener {
             );
         }
 
-        // 🔥 3. MASKOWANIE ULIC – NOWA LOGIKA (ANTY FALSE-POSITIVE)
-        sanitized = rodo.maskStreet(sanitized);
-
-        // 4. Cenzura końcowa (***)
+        // 3. Cenzura wizualna (***)
         sanitized = chatFilter.filterOutgoingMessage(sanitized);
 
         event.setMessage(sanitized);

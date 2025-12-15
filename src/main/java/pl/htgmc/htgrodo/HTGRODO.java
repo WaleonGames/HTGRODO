@@ -18,7 +18,6 @@ public class HTGRODO extends JavaPlugin {
 
     private ChatFilter chatFilter;
     private UserInputFilter inputFilter;
-    private DataMasker masker;
     private PrivacyPolicyEngine policy;
     private AuditLogger audit;
     private RodoAPI api;
@@ -45,12 +44,11 @@ public class HTGRODO extends JavaPlugin {
 
         // MODULES
         log("Loading modules...");
-        this.masker = new DataMasker();
         this.chatFilter = new ChatFilter();
         this.inputFilter = new UserInputFilter();
         this.policy = new PrivacyPolicyEngine();
         this.audit = new AuditLogger();
-        this.api = new RodoAPI(masker, chatFilter, inputFilter, policy, audit);
+        this.api = new RodoAPI(chatFilter, inputFilter, policy, audit);
 
         // SERVICES MANAGER — REJESTRACJA API
         getServer().getServicesManager().register(
@@ -120,7 +118,7 @@ public class HTGRODO extends JavaPlugin {
         log("    | |  | | |____| |_) | |__| | |_| | |__| | |_| | ");
         log("    |_|  |_|______|____/ \\____/ \\___/ \\____/ \\___/  ");
         log(" ");
-        log("HTGRODO v1.1 - Privacy & Data Protection Layer");
+        log("HTGRODO v1.3 - Privacy & Data Protection Layer");
         log("Running on: Bukkit/Paper");
         log(" ");
     }

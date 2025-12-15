@@ -1,7 +1,7 @@
 pl/htgmc/htgrodo/listeners/ChatListener.class
+pl/htgmc/htgrodo/censor/IpValidator.class
 pl/htgmc/htgrodo/privacy/PrivacyPolicyEngine$1.class
 pl/htgmc/htgrodo/censor/UserInputFilter.class
-pl/htgmc/htgrodo/privacy/DataMasker.class
 pl/htgmc/htgrodo/users/UserDataManager.class
 pl/htgmc/htgrodo/utils/FileUtil.class
 pl/htgmc/htgrodo/privacy/PrivacyPolicyEngine.class
@@ -10,7 +10,10 @@ pl/htgmc/htgrodo/commands/RodoCommand.class
 pl/htgmc/htgrodo/utils/HashUtils.class
 pl/htgmc/htgrodo/listeners/CommandListener.class
 pl/htgmc/htgrodo/censor/ChatFilter.class
+pl/htgmc/htgrodo/censor/PeselType.class
 pl/htgmc/htgrodo/audit/AuditLogger.class
 pl/htgmc/htgrodo/api/RodoAPI.class
+pl/htgmc/htgrodo/censor/IpType.class
 pl/htgmc/htgrodo/censor/SensitivePatterns.class
 pl/htgmc/htgrodo/HTGRODO.class
+pl/htgmc/htgrodo/censor/PeselValidator.class
